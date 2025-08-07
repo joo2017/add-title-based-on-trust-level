@@ -8,6 +8,9 @@ module AddTitleBasedOnTrustLevel
       group_titles = JSON.parse(SiteSetting.group_trust_level_titles || "{}")
 
       User.find_each do |user|
+        # 跳过管理员和版主
+        next if user.admin? || user.moderator?
+
         group_id = user.primary_group_id
         next unless group_id
 
@@ -24,7 +27,8 @@ module AddTitleBasedOnTrustLevel
         new_title = titles[tl]
         next unless new_title.present?
 
-        user.update_column(:title, new_title)
+        # 只在title不一致时更新
+        user.update_column(:title, new_title) if user.title != new_title
       end
     end
   end
