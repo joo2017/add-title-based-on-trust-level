@@ -1,0 +1,9 @@
+en:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          add_title_based_on_trust_level: "Add title based on Trust Level"
+  js:
+    add_title_based_on_trust_level:
+      title: "Add title based on Trust Level"
