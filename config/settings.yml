@@ -1,5 +1,5 @@
 plugins:
-  test:
+  add_title_based_on_trust_level_enabled:
     default: false
     client: true
   group_trust_level_titles:
