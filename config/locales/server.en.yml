@@ -1,0 +1,8 @@
+en:
+  site_settings:
+    tl0_title_on_created: "The title to add to new users"
+    tl1_title_on_promotion: "The title to add to users who have been promoted to Trust Level 1 (Basic)"
+    tl2_title_on_promotion: "The title to add to users who have been promoted to Trust Level 2 (Member)"
+    tl3_title_on_promotion: "The title to add to users who have been promoted to Trust Level 3 (Regular)"
+    tl4_title_on_promotion: "The title to add to users who have been promoted to Trust Level 4 (Leader)"
+    update_title_frequency: "How often the titles should be checked and updated, in hours"
