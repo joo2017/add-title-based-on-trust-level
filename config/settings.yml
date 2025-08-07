@@ -1,16 +1,12 @@
-# plugins/<你的插件名称>/config/settings.yml
-
-add_title_based_on_trust_level_enabled:
-  default: false
-  # 移除了 client: true。这是一个典型的开关设置，应该由管理员在后台控制。
-
-group_trust_level_titles:
-  default: '{"designers": ["", "Junior Designer", "Designer", "Senior Designer", "Chief Designer"], "developers": ["", "Junior Developer", "Developer", "Senior Developer", "Tech Lead"]}'
-  type: string
-  multiline: true
-  # 移除了 client: true。这个复杂的配置字符串由服务器端逻辑使用，不需要发送到客户端。
-
-update_title_frequency:
-  default: 24
-  type: integer
-  # 这个设置本身是正确的，没有 client: true
+plugins:
+  test:
+    default: false
+    client: true
+  group_trust_level_titles:
+    default: '{"designers": ["", "Junior Designer", "Designer", "Senior Designer", "Chief Designer"], "developers": ["", "Junior Developer", "Developer", "Senior Developer", "Tech Lead"]}'
+    type: string
+    client: true
+    multiline: true
+  update_title_frequency:
+    default: 24
+    type: integer
