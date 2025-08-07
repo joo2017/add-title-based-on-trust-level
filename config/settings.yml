@@ -2,21 +2,11 @@ plugins:
   add_title_based_on_trust_level_enabled:
     default: false
     client: true
-  tl0_title_on_create:
-    default: ""
+  group_trust_level_titles:
+    default: '{"designers": ["", "Junior Designer", "Designer", "Senior Designer", "Chief Designer"], "developers": ["", "Junior Developer", "Developer", "Senior Developer", "Tech Lead"]}'
     type: string
-  tl1_title_on_promotion:
-    default: ""
-    type: string
-  tl2_title_on_promotion:
-    default: ""
-    type: string
-  tl3_title_on_promotion:
-    default: ""
-    type: string
-  tl4_title_on_promotion:
-    default: ""
-    type: string
+    client: true
+    multiline: true
   update_title_frequency:
     default: 24
     type: integer
