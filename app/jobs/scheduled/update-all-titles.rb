@@ -1,39 +1,35 @@
 # frozen_string_literal: true
 
-module ::Jobs
-  class UpdateTitlesByGroupTL < ::Jobs::Scheduled
-    every 6.hours   # 定期执行，也可按需调整间隔
+module ::AddTitleByGroupTrust
+  class UpdateTitlesByGroupTrust < ::Jobs::Scheduled
+    every SiteSetting.add_title_by_group_trust_frequency.hours
 
     def execute(args)
-      mapping_json = SiteSetting.group_tl_to_title_map
-      group_map = JSON.parse(mapping_json) rescue {}
-
-      # 生成条件和title CASE语句
-      sql_cases = []
-      group_map.each do |group_name, tl_titles|
-        next unless tl_titles.is_a?(Array)
-        tl_titles.each_with_index do |title, tl|
-          next if title.to_s.strip == ""
-          sql_cases << <<~SQL
-            WHEN users.primary_group_id = (SELECT id FROM groups WHERE name = '#{group_name}') AND users.trust_level = #{tl}
-            THEN '#{title.gsub("'", "''")}'
-          SQL
-        end
+      titles_config = SiteSetting.group_trust_level_titles
+      return unless titles_config.present?
+      begin
+        rules = JSON.parse(titles_config)
+      rescue JSON::ParserError => e
+        Rails.logger.error("add-title plugin: JSON parse error in group_trust_level_titles: #{e.message}")
+        return
       end
 
-      return if sql_cases.empty?
+      User.where.not(primary_group_id: nil).find_each do |user|
+        next if user.admin? || user.moderator?
 
-      sql = <<~SQL
-        UPDATE users
-        SET title = CASE
-          #{sql_cases.join("\n")}
-          ELSE title
-        END
-        WHERE users.primary_group_id IS NOT NULL;
-      SQL
+        group = Group.find_by(id: user.primary_group_id)
+        next unless group
+        group_key = group.name.downcase
+        tl = user.trust_level.to_i
 
-      # 执行SQL
-      DB.exec sql
+        tl_titles = rules[group_key]
+        next unless tl_titles.is_a?(Array)
+        next unless tl > 0 && tl < tl_titles.length
+        new_title = tl_titles[tl]
+        next if !new_title.present? || user.title == new_title
+
+        user.update_column(:title, new_title)
+      end
     end
   end
 end
