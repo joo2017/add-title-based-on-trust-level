@@ -1,12 +1,12 @@
 plugins:
-  add_title_based_on_trust_level_enabled:
-    default: false
+  group_tl_to_title_map:
+    default: '{}'
     client: true
-  group_trust_level_titles:
-    default: '{"designers": ["", "Junior Designer", "Designer", "Senior Designer", "Chief Designer"], "developers": ["", "Junior Developer", "Developer", "Senior Developer", "Tech Lead"]}'
-    type: string
-    client: true
-    multiline: true
-  update_title_frequency:
-    default: 24
-    type: integer
+    type: text
+    description: |
+      配置分组+信任级别 自动分配 Title 的 JSON 映射。
+      例：
+      {
+        "designers": ["", "Junior Designer", "Designer", "Senior Designer", "Chief Designer"],
+        "developers": ["", "Junior Developer", "Developer", "Senior Developer", "Tech Lead"]
+      }
