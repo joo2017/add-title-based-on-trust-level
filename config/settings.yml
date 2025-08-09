@@ -3,13 +3,10 @@ plugins:
     default: false
     client: true
   group_trust_level_titles:
-    default: >-
-      {"designers": ["", "初级设计师", "设计师", "高级设计师", "首席设计师"], "developers": ["", "初级开发者", "开发者", "高级开发者", "技术主管"]}
+    default: '{"designers":["","Junior Designer","Designer","Senior Designer","Chief Designer"],"developers":["","Junior Developer","Developer","Senior Developer","Tech Lead"]}'
     type: string
     client: true
     multiline: true
-  add_title_by_group_trust_frequency:
-    default: 1
+  update_title_frequency:
+    default: 24
     type: integer
-    min: 1
-    description: "The frequency (in hours) to run the auto title update job"
