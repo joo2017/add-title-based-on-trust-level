@@ -1,34 +1,27 @@
 plugins:
-  # 插件的总开关
   add_title_by_group_trust_enabled:
     default: true
     client: true
 
-  # 这是全新的、使用 objects 类型的规则设置
+  # This MUST be type: objects. This was the source of the error.
   group_based_title_rules:
     type: objects
-    default: [] # 默认是一个空的规则列表
+    default: []
     schema:
       properties:
-        # 规则的第一部分：选择用户组
         group_id:
           type: integer
-          name: "用户组 (User Group)"
-          component: "group-chooser" # 这会自动生成一个用户组下拉选择菜单
-
-        # 规则的第二部分：填写信任等级
+          name: "User Group"
+          component: "group-chooser"
         trust_level:
           type: integer
-          name: "信任等级 (Trust Level)"
+          name: "Trust Level"
           min: 1
           max: 4
-
-        # 规则的第三部分：填写要应用的头衔
         title:
           type: string
-          name: "头衔 (Title)"
+          name: "Title"
   
-  # 我们保留更新频率的设置
   update_title_frequency:
     default: 24
     type: integer
