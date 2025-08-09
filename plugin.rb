@@ -1,10 +1,4 @@
-# name: add-title-based-on-group-trust-level
-# about: Assigns user titles based on primary group and trust level, per-site admin setting
-# version: 0.1
+# name: add-title-by-group-trust-level
+# about: assign titles via primary group + trust level using SQL
+# version: 0.2
 # authors: your-name
-
-enabled_site_setting :add_title_by_group_trust_enabled
-
-after_initialize do
-  # nothing here - all logic in the scheduled job
-end
