@@ -7,10 +7,19 @@ module ::Jobs
     def execute(args)
       return unless SiteSetting.add_title_by_group_trust_enabled
 
-      rules = SiteSetting.group_based_title_rules
+      # 获取设置值，它现在是一个JSON字符串
+      rules_json_string = SiteSetting.group_based_title_rules
+      return if rules_json_string.blank?
+
+      begin
+        # 这是最关键的修复：手动将JSON字符串解析成Ruby数组
+        rules = JSON.parse(rules_json_string)
+      rescue JSON::ParserError
+        # 如果JSON格式错误，则直接退出，防止任务失败
+        Rails.logger.error("Group-Based Titles Plugin: Failed to parse group_based_title_rules JSON.")
+        return
+      end
       
-      # Safety check: ensure 'rules' is an array before calling .each on it.
-      # This directly addresses the error from the log.
       return unless rules.is_a?(Array) && rules.present?
 
       User.transaction do
